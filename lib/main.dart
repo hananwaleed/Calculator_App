@@ -1,4 +1,5 @@
-import 'package:calculator_app/HomeScree.dart';
+
+import 'package:calculator_app/Screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,7 +12,7 @@ class Calc extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:Homescree() ,
+      home:HomeScreen(),
     );
   }
 }

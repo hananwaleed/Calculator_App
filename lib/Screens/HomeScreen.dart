@@ -2,8 +2,29 @@ import 'package:calculator_app/constants/constants.dart';
 import 'package:calculator_app/widgets/CustomButton.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  void numClick(String btnText) {
+    if (btnText == "Ac") {
+      setState(() {
+        exp = "";
+        history = "";
+      });
+      mum1 = 0;
+      num2 = 0;
+    }
+  }
+
+  String exp = "";
+  String history = "";
+  double mum1 = 0;
+  double num2 = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -19,77 +40,141 @@ class HomeScreen extends StatelessWidget {
         children: [
           Container(
             margin: EdgeInsets.only(right: 13),
-            child: Text("12345", style: Constants.styleOne),
+            child: Text(history, style: Constants.styleOne),
             alignment: Alignment.centerRight,
           ),
           Divider(color: Colors.white, thickness: 1, indent: 50, endIndent: 50),
           Container(
             margin: EdgeInsets.only(right: 13),
-            child: Text("12345", style: Constants.styleOne),
+            child: Text(exp, style: Constants.styleOne),
             alignment: Alignment.centerRight,
           ),
           SizedBox(height: 10),
           Row(
             children: [
               Expanded(
-                child: Custombutton(btnColor: Colors.grey, btnText: "AC"),
+                child: CustomButton(
+                  btnColor: Colors.grey,
+                  btnText: "AC",
+                  callback: numClick,
+                ),
               ),
               Expanded(
-                child: Custombutton(btnColor: Colors.grey, btnText: "c"),
+                child: CustomButton(
+                  btnColor: Colors.grey,
+                  btnText: "C",
+                  callback: numClick,
+                ),
               ),
               Expanded(
-                child: Custombutton(btnColor: Colors.grey, btnText: "%"),
+                child: CustomButton(
+                  btnColor: Colors.grey,
+                  btnText: "%",
+                  callback: numClick,
+                ),
               ),
               Expanded(
-                child: Custombutton(btnColor: Colors.orange, btnText: "/"),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Custombutton(btnColor: Colors.blueGrey, btnText: "7"),
-              ),
-              Expanded(
-                child: Custombutton(btnColor: Colors.blueGrey, btnText: "8"),
-              ),
-              Expanded(
-                child: Custombutton(btnColor: Colors.blueGrey, btnText: "9"),
-              ),
-              Expanded(
-                child: Custombutton(btnColor: Colors.orange, btnText: "*"),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Custombutton(btnColor: Colors.blueGrey, btnText: "4"),
-              ),
-              Expanded(
-                child: Custombutton(btnColor: Colors.blueGrey, btnText: "5"),
-              ),
-              Expanded(
-                child: Custombutton(btnColor: Colors.blueGrey, btnText: "6"),
-              ),
-              Expanded(
-                child: Custombutton(btnColor: Colors.orange, btnText: "-"),
+                child: CustomButton(
+                  btnColor: Colors.orange,
+                  btnText: "/",
+                  callback: numClick,
+                ),
               ),
             ],
           ),
           Row(
             children: [
               Expanded(
-                child: Custombutton(btnColor: Colors.blueGrey, btnText: "1"),
+                child: CustomButton(
+                  btnColor: Colors.blueGrey,
+                  btnText: "7",
+                  callback: numClick,
+                ),
               ),
               Expanded(
-                child: Custombutton(btnColor: Colors.blueGrey, btnText: "2"),
+                child: CustomButton(
+                  btnColor: Colors.blueGrey,
+                  btnText: "8",
+                  callback: numClick,
+                ),
               ),
               Expanded(
-                child: Custombutton(btnColor: Colors.blueGrey, btnText: "3"),
+                child: CustomButton(
+                  btnColor: Colors.blueGrey,
+                  btnText: "9",
+                  callback: numClick,
+                ),
               ),
               Expanded(
-                child: Custombutton(btnColor: Colors.orange, btnText: "+"),
+                child: CustomButton(
+                  btnColor: Colors.orange,
+                  btnText: "*",
+                  callback: numClick,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: CustomButton(
+                  btnColor: Colors.blueGrey,
+                  btnText: "4",
+                  callback: numClick,
+                ),
+              ),
+              Expanded(
+                child: CustomButton(
+                  btnColor: Colors.blueGrey,
+                  btnText: "5",
+                  callback: numClick,
+                ),
+              ),
+              Expanded(
+                child: CustomButton(
+                  btnColor: Colors.blueGrey,
+                  btnText: "6",
+                  callback: numClick,
+                ),
+              ),
+              Expanded(
+                child: CustomButton(
+                  btnColor: Colors.orange,
+                  btnText: "-",
+                  callback: numClick,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: CustomButton(
+                  btnColor: Colors.blueGrey,
+                  btnText: "1",
+                  callback: numClick,
+                ),
+              ),
+              Expanded(
+                child: CustomButton(
+                  btnColor: Colors.blueGrey,
+                  btnText: "2",
+                  callback: numClick,
+                ),
+              ),
+              Expanded(
+                child: CustomButton(
+                  btnColor: Colors.blueGrey,
+                  btnText: "3",
+                  callback: numClick,
+                ),
+              ),
+              Expanded(
+                child: CustomButton(
+                  btnColor: Colors.orange,
+                  btnText: "+",
+                  callback: numClick,
+                ),
               ),
             ],
           ),
@@ -112,13 +197,25 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: Custombutton(btnColor: Colors.blueGrey, btnText: "0"),
+                child: CustomButton(
+                  btnColor: Colors.blueGrey,
+                  btnText: "0",
+                  callback: numClick,
+                ),
               ),
               Expanded(
-                child: Custombutton(btnColor: Colors.blueGrey, btnText: "."),
+                child: CustomButton(
+                  btnColor: Colors.blueGrey,
+                  btnText: ".",
+                  callback: numClick,
+                ),
               ),
               Expanded(
-                child: Custombutton(btnColor: Colors.orange, btnText: "="),
+                child: CustomButton(
+                  btnColor: Colors.orange,
+                  btnText: "=",
+                  callback: numClick,
+                ),
               ),
             ],
           ),

@@ -1,6 +1,8 @@
+import 'package:calculator_app/Screens/HistoryScreen.dart';
 import 'package:calculator_app/constants/constants.dart';
-import 'package:calculator_app/widgets/CustomButton.dart';
+import 'package:calculator_app/widgets/BuildButtonRow.dart';
 import 'package:flutter/material.dart';
+import 'package:calculator_app/helper/CalculatorLogic.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,21 +12,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final CalculatorLogic calculator = CalculatorLogic();
+
   void numClick(String btnText) {
-    if (btnText == "Ac") {
-      setState(() {
-        exp = "";
-        history = "";
-      });
-      mum1 = 0;
-      num2 = 0;
-    }
+    setState(() {
+      calculator.numClick(btnText);
+    });
   }
 
-  String exp = "";
-  String history = "";
-  double mum1 = 0;
-  double num2 = 0;
+  void openHistory() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HistoryScreen(history: calculator.history),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,191 +37,38 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text("Calculator", style: Constants.styleOne),
         centerTitle: true,
         backgroundColor: Colors.black,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.history),
+            color: Colors.white,
+            onPressed: openHistory,
+          ),
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
-            margin: EdgeInsets.only(right: 13),
-            child: Text(history, style: Constants.styleOne),
+            margin: const EdgeInsets.only(right: 13),
+            child: Text(
+              calculator.history.isNotEmpty ? calculator.history.last : "",
+              style: Constants.styleOne,
+            ),
             alignment: Alignment.centerRight,
           ),
-          Divider(color: Colors.white, thickness: 1, indent: 50, endIndent: 50),
+          const Divider(color: Colors.white, thickness: 1, indent: 50, endIndent: 50),
           Container(
-            margin: EdgeInsets.only(right: 13),
-            child: Text(exp, style: Constants.styleOne),
+            margin: const EdgeInsets.only(right: 13),
+            child: Text(calculator.exp, style: Constants.styleOne),
             alignment: Alignment.centerRight,
           ),
-          SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: CustomButton(
-                  btnColor: Colors.grey,
-                  btnText: "AC",
-                  callback: numClick,
-                ),
-              ),
-              Expanded(
-                child: CustomButton(
-                  btnColor: Colors.grey,
-                  btnText: "C",
-                  callback: numClick,
-                ),
-              ),
-              Expanded(
-                child: CustomButton(
-                  btnColor: Colors.grey,
-                  btnText: "%",
-                  callback: numClick,
-                ),
-              ),
-              Expanded(
-                child: CustomButton(
-                  btnColor: Colors.orange,
-                  btnText: "/",
-                  callback: numClick,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: CustomButton(
-                  btnColor: Colors.blueGrey,
-                  btnText: "7",
-                  callback: numClick,
-                ),
-              ),
-              Expanded(
-                child: CustomButton(
-                  btnColor: Colors.blueGrey,
-                  btnText: "8",
-                  callback: numClick,
-                ),
-              ),
-              Expanded(
-                child: CustomButton(
-                  btnColor: Colors.blueGrey,
-                  btnText: "9",
-                  callback: numClick,
-                ),
-              ),
-              Expanded(
-                child: CustomButton(
-                  btnColor: Colors.orange,
-                  btnText: "*",
-                  callback: numClick,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: CustomButton(
-                  btnColor: Colors.blueGrey,
-                  btnText: "4",
-                  callback: numClick,
-                ),
-              ),
-              Expanded(
-                child: CustomButton(
-                  btnColor: Colors.blueGrey,
-                  btnText: "5",
-                  callback: numClick,
-                ),
-              ),
-              Expanded(
-                child: CustomButton(
-                  btnColor: Colors.blueGrey,
-                  btnText: "6",
-                  callback: numClick,
-                ),
-              ),
-              Expanded(
-                child: CustomButton(
-                  btnColor: Colors.orange,
-                  btnText: "-",
-                  callback: numClick,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: CustomButton(
-                  btnColor: Colors.blueGrey,
-                  btnText: "1",
-                  callback: numClick,
-                ),
-              ),
-              Expanded(
-                child: CustomButton(
-                  btnColor: Colors.blueGrey,
-                  btnText: "2",
-                  callback: numClick,
-                ),
-              ),
-              Expanded(
-                child: CustomButton(
-                  btnColor: Colors.blueGrey,
-                  btnText: "3",
-                  callback: numClick,
-                ),
-              ),
-              Expanded(
-                child: CustomButton(
-                  btnColor: Colors.orange,
-                  btnText: "+",
-                  callback: numClick,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  width: 70,
-                  height: 70,
-                  margin: EdgeInsets.all(8),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.blueGrey,
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.calculate, size: 30),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: CustomButton(
-                  btnColor: Colors.blueGrey,
-                  btnText: "0",
-                  callback: numClick,
-                ),
-              ),
-              Expanded(
-                child: CustomButton(
-                  btnColor: Colors.blueGrey,
-                  btnText: ".",
-                  callback: numClick,
-                ),
-              ),
-              Expanded(
-                child: CustomButton(
-                  btnColor: Colors.orange,
-                  btnText: "=",
-                  callback: numClick,
-                ),
-              ),
-            ],
-          ),
+          const SizedBox(height: 10),
+
+          BuildButtonRow(buttons: ["AC", "C", "%", "/"], numClick: numClick),
+          BuildButtonRow(buttons: ["7", "8", "9", "*"], numClick: numClick),
+          BuildButtonRow(buttons: ["4", "5", "6", "-"], numClick: numClick),
+          BuildButtonRow(buttons: ["1", "2", "3", "+"], numClick: numClick),
+          BuildButtonRow(buttons: ["0", ".", "="], numClick: numClick),
         ],
       ),
     );

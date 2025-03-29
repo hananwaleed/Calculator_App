@@ -1,35 +1,33 @@
-import 'package:calculator_app/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({
-    super.key,
-    required this.btnColor,
-    required this.btnText,
-    required this.callback,
-  });
-
-  final Color btnColor;
   final String btnText;
-  final Function callback;
+  final Color btnColor;
+  final VoidCallback callback;
+
+  const CustomButton({
+    required this.btnText,
+    required this.btnColor,
+    required this.callback,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          callback(btnText);
-        },
-        child: Container(
-          width: 70,
-          height: 70,
-          margin: EdgeInsets.all(8),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: btnColor,
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: btnColor,
+          padding: const EdgeInsets.all(20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
           ),
-          child: Text(btnText, style: Constants.styleTwo),
+        ),
+        onPressed: callback,
+        child: Text(
+          btnText,
+          style: const TextStyle(fontSize: 20, color: Colors.white),
         ),
       ),
     );

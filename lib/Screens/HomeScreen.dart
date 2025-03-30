@@ -35,12 +35,15 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   void calculate() {
     try {
       Parser p = Parser();
-      Expression exp = p.parse(display.replaceAll('×', '*').replaceAll('÷', '/'));
+      Expression exp = p.parse(
+        display.replaceAll('×', '*').replaceAll('÷', '/'),
+      );
       ContextModel cm = ContextModel();
       double eval = exp.evaluate(EvaluationType.REAL, cm);
 
       setState(() {
-        String result = eval % 1 == 0 ? eval.toInt().toString() : eval.toStringAsFixed(2);
+        String result =
+            eval % 1 == 0 ? eval.toInt().toString() : eval.toStringAsFixed(2);
         history.add("$display = $result");
         display = result;
       });
@@ -75,7 +78,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.history),
+            icon: Icon(Icons.history, color: Colors.white),
             onPressed: openHistory,
           ),
         ],
@@ -102,7 +105,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           Column(
             children: [
               buildRow(
-                ['AC', '+/-', '%', '÷'],
+                ['AC', 'C', '%', '÷'],
                 [Colors.grey, Colors.grey, Colors.grey, Colors.orange],
                 appendToDisplay,
                 clearDisplay,

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
 Widget buildButton(
     String text,
     Color bgColor,
@@ -8,8 +8,8 @@ Widget buildButton(
   }) {
     return Container(
       margin: EdgeInsets.all(5),
-      width: 75,
-      height: 75,
+      width: 80,
+      height: 80,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
@@ -22,7 +22,7 @@ Widget buildButton(
         child: Text(
           text,
           style: TextStyle(
-            fontSize: 30,
+            fontSize: text == 'AC' ? 24 : 30, 
             fontWeight: FontWeight.bold,
             color: textColor,
           ),

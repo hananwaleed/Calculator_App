@@ -7,8 +7,8 @@ Widget buildLastRow(Function(String) appendToDisplay, Function() calculate) {
     children: [
       Container(
         margin: EdgeInsets.all(5),
-        width: 80,
-        height: 80,
+        width: 78,
+        height: 78,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(

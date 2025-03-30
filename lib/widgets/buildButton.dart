@@ -8,8 +8,8 @@ Widget buildButton(
   }) {
     return Container(
       margin: EdgeInsets.all(5),
-      width: 80,
-      height: 80,
+      width: 78,
+      height: 78,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
@@ -22,7 +22,7 @@ Widget buildButton(
         child: Text(
           text,
           style: TextStyle(
-            fontSize: text == 'AC' ? 24 : 30, 
+            fontSize: text == 'AC' ? 27 : 30, 
             fontWeight: FontWeight.bold,
             color: textColor,
           ),

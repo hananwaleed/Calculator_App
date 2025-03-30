@@ -35,7 +35,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       body: widget.history.isEmpty
           ? Center(
               child: Text(
-                "No history available",
+                "No History Available",
                 style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w500),
               ),
             )

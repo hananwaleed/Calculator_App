@@ -36,7 +36,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           ? Center(
               child: Text(
                 "No History Available",
-                style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w500),
+                style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w500),
               ),
             )
           : Column(
@@ -55,7 +55,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           ),
                           child: Text(
                             widget.history[index],
-                            style: TextStyle(color: Colors.white, fontSize: 22),
+                            style: TextStyle(color: Colors.white, fontSize: 30),
                           ),
                         ),
                       );

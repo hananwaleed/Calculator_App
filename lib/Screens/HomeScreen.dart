@@ -105,7 +105,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           Column(
             children: [
               buildRow(
-                ['AC', 'C', '%', '÷'],
+                ['AC', 'DC', '%', '÷'],
                 [Colors.grey, Colors.grey, Colors.grey, Colors.orange],
                 appendToDisplay,
                 clearDisplay,

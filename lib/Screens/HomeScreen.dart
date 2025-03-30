@@ -1,31 +1,60 @@
-import 'package:calculator_app/Screens/HistoryScreen.dart';
-import 'package:calculator_app/constants/constants.dart';
-import 'package:calculator_app/widgets/BuildButtonRow.dart';
+import 'package:calc/Screens/HistoryScreen.dart';
+import 'package:calc/widgets/buildLastRow.dart';
+import 'package:calc/widgets/buildRow.dart';
 import 'package:flutter/material.dart';
-import 'package:calculator_app/helper/CalculatorLogic.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+import 'package:math_expressions/math_expressions.dart';
 
+class CalculatorScreen extends StatefulWidget {
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  _CalculatorScreenState createState() => _CalculatorScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final CalculatorLogic calculator = CalculatorLogic();
+class _CalculatorScreenState extends State<CalculatorScreen> {
+  String display = "0";
+  List<String> history = [];
 
-  void numClick(String btnText) {
+  void appendToDisplay(String value) {
     setState(() {
-      calculator.numClick(btnText);
+      if (display == "0" && value != '.' && value != '+/-') {
+        display = value;
+      } else if (value == '+/-') {
+        display = display.startsWith('-') ? display.substring(1) : '-$display';
+      } else {
+        display += value;
+      }
     });
+  }
+
+  void clearDisplay() {
+    setState(() {
+      display = "0";
+    });
+  }
+
+  void calculate() {
+    try {
+      Parser p = Parser();
+      Expression exp = p.parse(display.replaceAll('×', '*').replaceAll('÷', '/'));
+      ContextModel cm = ContextModel();
+      double eval = exp.evaluate(EvaluationType.REAL, cm);
+
+      setState(() {
+        String result = eval % 1 == 0 ? eval.toInt().toString() : eval.toStringAsFixed(2);
+        history.add("$display = $result");
+        display = result;
+      });
+    } catch (e) {
+      setState(() {
+        display = "Error";
+      });
+    }
   }
 
   void openHistory() {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => HistoryScreen(history: calculator.history),
-      ),
+      MaterialPageRoute(builder: (context) => HistoryScreen(history: history)),
     );
   }
 
@@ -34,13 +63,19 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text("Calculator", style: Constants.styleOne),
-        centerTitle: true,
         backgroundColor: Colors.black,
+        centerTitle: true,
+        title: Text(
+          "Calculator",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 27,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.history),
-            color: Colors.white,
+            icon: Icon(Icons.history),
             onPressed: openHistory,
           ),
         ],
@@ -49,26 +84,69 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
-            margin: const EdgeInsets.only(right: 13),
-            child: Text(
-              calculator.history.isNotEmpty ? calculator.history.last : "",
-              style: Constants.styleOne,
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            alignment: Alignment.centerRight,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Text(
+                display,
+                style: TextStyle(
+                  fontSize: 80,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-            alignment: Alignment.centerRight,
           ),
-          const Divider(color: Colors.white, thickness: 1, indent: 50, endIndent: 50),
-          Container(
-            margin: const EdgeInsets.only(right: 13),
-            child: Text(calculator.exp, style: Constants.styleOne),
-            alignment: Alignment.centerRight,
+          SizedBox(height: 20),
+          Column(
+            children: [
+              buildRow(
+                ['AC', '+/-', '%', '÷'],
+                [Colors.grey, Colors.grey, Colors.grey, Colors.orange],
+                appendToDisplay,
+                clearDisplay,
+                calculate,
+              ),
+              buildRow(
+                ['7', '8', '9', '×'],
+                [
+                  Colors.grey[850]!,
+                  Colors.grey[850]!,
+                  Colors.grey[850]!,
+                  Colors.orange,
+                ],
+                appendToDisplay,
+                clearDisplay,
+                calculate,
+              ),
+              buildRow(
+                ['4', '5', '6', '-'],
+                [
+                  Colors.grey[850]!,
+                  Colors.grey[850]!,
+                  Colors.grey[850]!,
+                  Colors.orange,
+                ],
+                appendToDisplay,
+                clearDisplay,
+                calculate,
+              ),
+              buildRow(
+                ['1', '2', '3', '+'],
+                [
+                  Colors.grey[850]!,
+                  Colors.grey[850]!,
+                  Colors.grey[850]!,
+                  Colors.orange,
+                ],
+                appendToDisplay,
+                clearDisplay,
+                calculate,
+              ),
+              buildLastRow(appendToDisplay, calculate),
+            ],
           ),
-          const SizedBox(height: 10),
-
-          BuildButtonRow(buttons: ["AC", "C", "%", "/"], numClick: numClick),
-          BuildButtonRow(buttons: ["7", "8", "9", "*"], numClick: numClick),
-          BuildButtonRow(buttons: ["4", "5", "6", "-"], numClick: numClick),
-          BuildButtonRow(buttons: ["1", "2", "3", "+"], numClick: numClick),
-          BuildButtonRow(buttons: ["0", ".", "="], numClick: numClick),
         ],
       ),
     );

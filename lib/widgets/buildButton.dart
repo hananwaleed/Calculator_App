@@ -8,8 +8,8 @@ Widget buildButton(
 }) {
   return Container(
     margin: EdgeInsets.all(5),
-    width: 78,
-    height: 78,
+    width: 79,
+    height: 79,
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
